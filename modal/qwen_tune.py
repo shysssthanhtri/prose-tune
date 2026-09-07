@@ -34,11 +34,16 @@ image = (
     modal.Image.debian_slim(python_version="3.12")
     .uv_pip_install(
         "vllm==0.9.1",
+        # Pinned: newer transformers ships a native "aimv2" config that
+        # collides with vllm 0.9.1's own compat shim for the Ovis model
+        # (vllm/transformers_utils/configs/ovis.py), raising
+        # ValueError: 'aimv2' is already used by a Transformers config.
+        "transformers==4.52.4",
         "huggingface_hub[hf_transfer]>=0.32.0",
     )
     .env(
         {
-            "HF_HUB_ENABLE_HF_TRANSFER": "1",
+            "HF_XET_HIGH_PERFORMANCE": "1",
             "HF_HOME": CACHE_DIR,
             "VLLM_CACHE_ROOT": "/vllm-cache",
         }
