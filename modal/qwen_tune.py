@@ -34,7 +34,7 @@ image = (
     modal.Image.debian_slim(python_version="3.12")
     .uv_pip_install(
         "vllm==0.9.1",
-        "huggingface_hub[hf_transfer]==0.31.2",
+        "huggingface_hub[hf_transfer]>=0.32.0",
     )
     .env(
         {
